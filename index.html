@@ -185,99 +185,170 @@ body::after {
 @media(max-width:640px) { .nav-links { display:none; } }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   HERO
+   HERO  —  CINEMATIC FULLSCREEN CENTERED
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 #hero {
   position:relative; overflow:hidden;
   min-height:100svh; padding-top:54px;
-  display:flex; flex-direction:column;
+  display:flex; flex-direction:column; align-items:center;
 }
-/* EDITORIAL GRID LINES */
-.hero-gridlines {
+/* dot grid */
+.hero-dots {
   position:absolute; inset:0; pointer-events:none;
-  display:grid; grid-template-columns:repeat(12,1fr); gap:24px;
-  padding:0 var(--sp4); opacity:.022;
+  background-image:radial-gradient(circle,rgba(255,255,255,.06) 1px,transparent 1px);
+  background-size:44px 44px;
+  mask-image:radial-gradient(ellipse 85% 60% at 50% 28%,black,transparent);
 }
-.hero-gridlines span { border-right:1px solid white; }
-/* GLOW */
+/* glows */
 .hero-glow1 {
-  position:absolute; pointer-events:none; border-radius:50%; filter:blur(90px);
-  width:700px; height:450px; top:-60px; left:50%; transform:translateX(-50%);
-  background:radial-gradient(circle,rgba(224,50,24,.14) 0%,transparent 65%);
+  position:absolute; pointer-events:none; border-radius:50%; filter:blur(100px);
+  width:900px; height:560px; top:-80px; left:50%; transform:translateX(-50%);
+  background:radial-gradient(circle,rgba(224,50,24,.17) 0%,transparent 60%);
 }
 .hero-glow2 {
-  position:absolute; pointer-events:none; border-radius:50%; filter:blur(130px);
-  width:400px; height:400px; bottom:0; right:-5%;
-  background:radial-gradient(circle,rgba(224,50,24,.08) 0%,transparent 65%);
+  position:absolute; pointer-events:none; border-radius:50%; filter:blur(140px);
+  width:500px; height:500px; bottom:-60px; right:-80px;
+  background:radial-gradient(circle,rgba(224,50,24,.09) 0%,transparent 65%);
 }
-/* MAIN BODY */
-.hero-body {
-  flex:1; display:grid;
-  grid-template-columns: 1fr 480px;
-  gap:0; align-items:center;
-  max-width:1280px; width:100%; margin:0 auto;
-  padding:var(--sp9) var(--sp4) var(--sp6);
-  position:relative; z-index:2;
+.hero-glow3 {
+  position:absolute; pointer-events:none; border-radius:50%; filter:blur(140px);
+  width:400px; height:400px; bottom:-40px; left:-60px;
+  background:radial-gradient(circle,rgba(224,50,24,.06) 0%,transparent 65%);
 }
-@media(max-width:960px) {
-  .hero-body { grid-template-columns:1fr; text-align:center; }
-  .hero-L .eyerow { justify-content:center; }
-  .hero-L .h-cta { justify-content:center; }
-  .hero-L .h-stats { margin:0 auto; }
-  .hero-R { display:none; }
+/* inner column */
+.hero-inner {
+  flex:1; position:relative; z-index:2;
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; width:100%; max-width:1100px;
+  padding:var(--sp6) var(--sp4) var(--sp4);
 }
-/* LEFT */
-.eyerow { display:flex; align-items:center; gap:var(--sp2); margin-bottom:var(--sp3); }
-.e-pip { width:5px; height:5px; border-radius:50%; background:var(--red); box-shadow:0 0 10px rgba(224,50,24,.9); animation:pip 2.5s ease-in-out infinite; }
+/* 1 — eyerow pill */
+.h-eyerow {
+  display:inline-flex; align-items:center; gap:var(--sp2);
+  padding:6px 18px 6px 12px;
+  border:1px solid rgba(224,50,24,.3);
+  border-radius:var(--rpill);
+  background:rgba(224,50,24,.09);
+  margin-bottom:var(--sp5);
+  animation:hrise .7s .05s var(--e1) both;
+}
+.h-eyerow-dot {
+  width:5px; height:5px; border-radius:50%;
+  background:var(--red); box-shadow:0 0 8px rgba(224,50,24,.9);
+  animation:pip 2.4s ease-in-out infinite; flex-shrink:0;
+}
 @keyframes pip { 0%,100%{opacity:1}50%{opacity:.2} }
-.h-title { margin-bottom:var(--sp3); }
-.h-title-ghost { font-family:var(--fd); font-size:clamp(80px,13vw,180px); line-height:.82; text-transform:uppercase; color:transparent; -webkit-text-stroke:1px rgba(237,234,226,.055); display:block; }
-.h-sub { max-width:400px; margin-bottom:var(--sp6); }
-.h-cta { display:flex; flex-wrap:wrap; gap:var(--sp2); margin-bottom:var(--sp7); }
-.h-stats {
-  display:grid; grid-template-columns:repeat(3,1fr); overflow:hidden;
-  border:1px solid var(--b0); border-radius:var(--r2); gap:1px;
-  background:var(--b0); max-width:380px;
+.h-eyerow-text {
+  font-family:var(--fm); font-size:10px;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--red);
 }
-.h-stat { background:var(--s0); padding:var(--sp2) var(--sp3); }
-.h-stat-n { font-family:var(--fd); font-size:30px; line-height:1; color:var(--ink); }
-.h-stat-l { font-family:var(--fm); font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink3); margin-top:3px; }
-/* RIGHT — can */
-.hero-R {
-  height:100%; min-height:560px;
+/* 2 — headline */
+.h-headline { margin-bottom:0; animation:hrise .85s .15s var(--e1) both; }
+.h-hl-main {
+  font-family:var(--fd);
+  font-size:clamp(56px,11vw,168px);
+  line-height:.86; text-transform:uppercase;
+  color:var(--ink); letter-spacing:-.01em; display:block;
+}
+.h-hl-main em { color:var(--red); font-style:normal; }
+.h-hl-ghost {
+  font-family:var(--fd);
+  font-size:clamp(56px,11vw,168px);
+  line-height:.86; text-transform:uppercase;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(237,234,226,.055);
+  display:block; margin-top:-3px;
+  pointer-events:none; user-select:none;
+}
+/* 3 — can stage */
+.h-can-stage {
+  position:relative; width:240px; height:340px;
   display:flex; align-items:center; justify-content:center;
-  position:relative;
+  margin:var(--sp4) auto var(--sp2);
+  animation:hrise .85s .24s var(--e1) both;
+  flex-shrink:0;
 }
-.can-wrap { position:relative; }
-.can-aura { position:absolute; inset:-35%; border-radius:50%; background:radial-gradient(circle,rgba(224,50,24,.2) 0%,transparent 62%); animation:aura 4s ease-in-out infinite; pointer-events:none; }
-@keyframes aura { 0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.07)} }
+@media(max-width:480px){ .h-can-stage{width:180px;height:260px;} }
+.can-aura {
+  position:absolute; inset:-30%; border-radius:50%;
+  background:radial-gradient(circle,rgba(224,50,24,.22) 0%,transparent 60%);
+  animation:aura 4s ease-in-out infinite; pointer-events:none;
+}
+@keyframes aura { 0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.08)} }
 .can-float { animation:cfloat 7s ease-in-out infinite; }
-@keyframes cfloat { 0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-22px) rotate(1.5deg)} }
-.can-shad { position:absolute; bottom:-22px; left:50%; transform:translateX(-50%); width:110px; height:18px; border-radius:50%; background:rgba(224,50,24,.22); filter:blur(16px); animation:cshad 7s ease-in-out infinite; }
-@keyframes cshad { 0%,100%{width:110px;opacity:.5}50%{width:68px;opacity:.18} }
-/* orbit lines */
-.orb { position:absolute; border-radius:50%; border:1px dashed rgba(224,50,24,.1); top:50%; left:50%; animation:ospin 35s linear infinite; }
-.orb1 { width:310px; height:310px; transform:translate(-50%,-50%); }
-.orb2 { width:450px; height:450px; transform:translate(-50%,-50%); animation-direction:reverse; animation-duration:52s; }
+@keyframes cfloat { 0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-20px) rotate(1.3deg)} }
+.can-shad {
+  position:absolute; bottom:-14px; left:50%; transform:translateX(-50%);
+  width:90px; height:14px; border-radius:50%;
+  background:rgba(224,50,24,.24); filter:blur(12px);
+  animation:cshad 7s ease-in-out infinite;
+}
+@keyframes cshad { 0%,100%{width:90px;opacity:.5}50%{width:56px;opacity:.18} }
+.orb {
+  position:absolute; border-radius:50%;
+  border:1px dashed rgba(224,50,24,.1);
+  top:50%; left:50%; animation:ospin 36s linear infinite;
+}
+.orb1 { width:260px; height:260px; transform:translate(-50%,-50%); }
+.orb2 { width:380px; height:380px; transform:translate(-50%,-50%); animation-direction:reverse; animation-duration:54s; }
 @keyframes ospin { to{transform:translate(-50%,-50%) rotate(360deg)} }
 .orb-dot { position:absolute; width:4px; height:4px; border-radius:50%; background:var(--red); top:-2px; left:50%; margin-left:-2px; box-shadow:0 0 8px rgba(224,50,24,.9); }
 .orb-dot-b { top:auto; bottom:-2px; }
+/* 4 — meta row */
+.h-meta {
+  display:flex; align-items:center; justify-content:center;
+  gap:var(--sp4); flex-wrap:wrap;
+  margin-bottom:var(--sp3);
+  animation:hrise .7s .32s var(--e1) both;
+}
+.h-meta-item {
+  display:flex; align-items:center; gap:6px;
+  font-family:var(--fm); font-size:10px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink3);
+}
+.h-meta-item svg { width:11px; height:11px; stroke:var(--red); flex-shrink:0; }
+.h-meta-sep { width:1px; height:12px; background:var(--b1); }
+/* 5 — subtext */
+.h-sub {
+  max-width:480px; margin:0 auto var(--sp5);
+  font-family:var(--fb); font-size:16px; font-weight:400;
+  color:var(--ink2); line-height:1.72;
+  animation:hrise .7s .40s var(--e1) both;
+}
+/* 6 — CTA */
+.h-cta {
+  display:flex; align-items:center; justify-content:center;
+  flex-wrap:wrap; gap:var(--sp2); margin-bottom:var(--sp5);
+  animation:hrise .7s .48s var(--e1) both;
+}
+/* 7 — stats */
+.h-stats {
+  display:flex; gap:1px; overflow:hidden;
+  border:1px solid var(--b0); border-radius:var(--r2);
+  background:var(--b0); width:100%; max-width:440px;
+  animation:hrise .7s .56s var(--e1) both;
+}
+.h-stat {
+  background:var(--s0); padding:var(--sp2) var(--sp4);
+  flex:1; display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+.h-stat-n {
+  font-family:var(--fd); font-size:30px; line-height:1;
+  color:var(--ink); letter-spacing:-.01em;
+}
+.h-stat-l {
+  font-family:var(--fm); font-size:9px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink3);
+}
 /* hero foot */
 .hero-foot {
-  position:relative; z-index:2;
-  max-width:1280px; margin:0 auto; width:100%;
+  position:relative; z-index:2; width:100%; max-width:1280px;
   padding:0 var(--sp4) var(--sp5);
   display:flex; align-items:center; justify-content:space-between;
 }
 .scroll-hint { display:flex; align-items:center; gap:var(--sp2); }
 .scroll-line { width:32px; height:1px; background:linear-gradient(90deg,var(--red),transparent); }
-/* hero anims */
-@keyframes hrise { from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none} }
-.ha0{animation:hrise .8s .1s var(--e1) both}
-.ha1{animation:hrise .8s .2s var(--e1) both}
-.ha2{animation:hrise .8s .34s var(--e1) both}
-.ha3{animation:hrise .8s .48s var(--e1) both}
-.ha4{animation:hrise .8s .62s var(--e1) both}
+@keyframes hrise { from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none} }
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
    TICKER
@@ -535,125 +606,135 @@ body::after {
 
 <!-- ══════════ HERO ═══════════════════════════════════════ -->
 <section id="hero">
-  <!-- editorial grid lines in bg -->
-  <div class="hero-gridlines" aria-hidden="true">
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
-  </div>
+  <div class="hero-dots"></div>
   <div class="hero-glow1"></div>
   <div class="hero-glow2"></div>
+  <div class="hero-glow3"></div>
 
-  <div class="hero-body">
-    <!-- LEFT -->
-    <div class="hero-L">
-      <div class="eyerow ha0">
-        <div class="e-pip"></div>
-        <span class="ts-label c-red">New Drops — 2025</span>
-      </div>
-      <div class="h-title ha1">
-        <h1 class="ts-d1">Taste<br/>The<br/><span class="c-red">Dark</span><br/>Side.</h1>
-        <span class="h-title-ghost">Soda</span>
-      </div>
-      <p class="ts-base h-sub ha2">Premium craft sodas brewed for those who refuse ordinary. Bold flavors. Zero compromise.</p>
-      <div class="h-cta ha3">
-        <a href="#products" class="btn btn-fill btn-lg">
-          Explore Flavors
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a href="#about" class="btn btn-line btn-lg">Our Story</a>
-      </div>
-      <div class="h-stats ha4">
-        <div class="h-stat">
-          <div class="h-stat-n">12+</div>
-          <div class="h-stat-l">Flavors</div>
-        </div>
-        <div class="h-stat" style="border-left:1px solid var(--b0)">
-          <div class="h-stat-n">50K</div>
-          <div class="h-stat-l">Cans Sold</div>
-        </div>
-        <div class="h-stat" style="border-left:1px solid var(--b0)">
-          <div class="h-stat-n">100%</div>
-          <div class="h-stat-l">Natural</div>
-        </div>
-      </div>
+  <div class="hero-inner">
+
+    <!-- 1 · EYEROW PILL -->
+    <div class="h-eyerow">
+      <div class="h-eyerow-dot"></div>
+      <span class="h-eyerow-text">New Drops — 2025 · Lahore, Pakistan</span>
     </div>
 
-    <!-- RIGHT: can stage -->
-    <div class="hero-R ha2">
+    <!-- 2 · HEADLINE -->
+    <div class="h-headline">
+      <span class="h-hl-main">We Don't</span>
+      <span class="h-hl-main">Do <em>Average.</em></span>
+      <span class="h-hl-main">Taste The</span>
+      <span class="h-hl-main"><em>Dark</em> Side.</span>
+      <span class="h-hl-ghost">Bold · Craft · Soda</span>
+    </div>
+
+    <!-- 3 · CAN STAGE -->
+    <div class="h-can-stage">
       <div class="orb orb1"><div class="orb-dot"></div></div>
       <div class="orb orb2"><div class="orb-dot orb-dot-b"></div></div>
-      <div class="can-wrap">
-        <div class="can-aura"></div>
-        <div class="can-float">
-          <!-- ★ HERO CAN — precision SVG ★ -->
-          <svg width="220" height="372" viewBox="0 0 220 372" fill="none" xmlns="http://www.w3.org/2000/svg"
-            style="filter:drop-shadow(0 48px 96px rgba(224,50,24,.52))">
-            <!-- BODY -->
-            <rect x="26" y="44" width="168" height="296" rx="30" fill="url(#hb)"/>
-            <!-- TOP -->
-            <ellipse cx="110" cy="44" rx="84" ry="21" fill="url(#ht)"/>
-            <!-- BOTTOM -->
-            <ellipse cx="110" cy="340" rx="84" ry="21" fill="url(#hbot)"/>
-            <!-- TAB BASE -->
-            <rect x="92" y="22" width="36" height="13" rx="6.5" fill="#28283c"/>
-            <circle cx="110" cy="29" r="8.5" fill="#181828"/>
-            <circle cx="110" cy="29" r="4" fill="#0c0c18"/>
-            <!-- HIGHLIGHT — left edge -->
-            <rect x="32" y="62" width="12" height="262" rx="6" fill="white" opacity=".055"/>
-            <rect x="50" y="76" width="4.5" height="238" rx="2.25" fill="white" opacity=".028"/>
-            <!-- RED LABEL GLOW -->
-            <rect x="27" y="116" width="166" height="178" fill="url(#hlbl)" opacity=".15"/>
-            <!-- DECORATIVE LINES -->
-            <rect x="36" y="114" width="148" height="1" fill="rgba(255,255,255,.04)"/>
-            <rect x="36" y="117" width="148" height="2" fill="rgba(224,50,24,.18)"/>
-            <rect x="36" y="280" width="148" height="1" fill="rgba(255,255,255,.04)"/>
-            <rect x="36" y="283" width="148" height="1.5" fill="rgba(224,50,24,.18)"/>
-            <!-- BRAND TEXT -->
-            <text x="110" y="210" text-anchor="middle"
-              font-family="'Bebas Neue',sans-serif" font-size="64" fill="white" opacity=".94"
-              letter-spacing="4">SIP</text>
-            <text x="110" y="260" text-anchor="middle"
-              font-family="'Bebas Neue',sans-serif" font-size="42" fill="#e03218"
-              letter-spacing="12">SODA</text>
-            <!-- SUBTEXT -->
-            <text x="110" y="305" text-anchor="middle"
-              font-family="'Syne Mono',monospace" font-size="8" fill="white" opacity=".18"
-              letter-spacing="6">PREMIUM CRAFT</text>
-            <defs>
-              <linearGradient id="hb" x1="26" y1="0" x2="194" y2="0" gradientUnits="userSpaceOnUse">
-                <stop offset="0%"   stop-color="#20202e"/>
-                <stop offset="35%"  stop-color="#141422"/>
-                <stop offset="68%"  stop-color="#0e0e1a"/>
-                <stop offset="100%" stop-color="#07070a"/>
-              </linearGradient>
-              <linearGradient id="ht" x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
-                <stop offset="0%"  stop-color="#32324a"/>
-                <stop offset="100%" stop-color="#10101a"/>
-              </linearGradient>
-              <linearGradient id="hbot" x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
-                <stop offset="0%"  stop-color="#10101a"/>
-                <stop offset="100%" stop-color="#04040c"/>
-              </linearGradient>
-              <linearGradient id="hlbl" x1="0" y1="0" x2="1" y2="0">
-                <stop offset="0%"   stop-color="transparent"/>
-                <stop offset="50%"  stop-color="#e03218"/>
-                <stop offset="100%" stop-color="transparent"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <div class="can-shad"></div>
+      <div class="can-aura"></div>
+      <div class="can-float">
+        <svg width="200" height="338" viewBox="0 0 220 372" fill="none"
+          style="filter:drop-shadow(0 44px 88px rgba(224,50,24,.55))">
+          <rect x="26" y="44" width="168" height="296" rx="30" fill="url(#hb)"/>
+          <ellipse cx="110" cy="44" rx="84" ry="21" fill="url(#ht)"/>
+          <ellipse cx="110" cy="340" rx="84" ry="21" fill="url(#hbot)"/>
+          <rect x="92" y="22" width="36" height="13" rx="6.5" fill="#28283c"/>
+          <circle cx="110" cy="29" r="8.5" fill="#181828"/>
+          <circle cx="110" cy="29" r="4" fill="#0c0c18"/>
+          <rect x="32" y="62" width="12" height="262" rx="6" fill="white" opacity=".055"/>
+          <rect x="50" y="76" width="4.5" height="238" rx="2.25" fill="white" opacity=".028"/>
+          <rect x="27" y="116" width="166" height="178" fill="url(#hlbl)" opacity=".15"/>
+          <rect x="36" y="114" width="148" height="1" fill="rgba(255,255,255,.04)"/>
+          <rect x="36" y="117" width="148" height="2" fill="rgba(224,50,24,.18)"/>
+          <rect x="36" y="280" width="148" height="1" fill="rgba(255,255,255,.04)"/>
+          <rect x="36" y="283" width="148" height="1.5" fill="rgba(224,50,24,.18)"/>
+          <text x="110" y="210" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="64" fill="white" opacity=".94" letter-spacing="4">SIP</text>
+          <text x="110" y="260" text-anchor="middle" font-family="'Bebas Neue',sans-serif" font-size="42" fill="#e03218" letter-spacing="12">SODA</text>
+          <text x="110" y="305" text-anchor="middle" font-family="'Syne Mono',monospace" font-size="8" fill="white" opacity=".18" letter-spacing="6">PREMIUM CRAFT</text>
+          <defs>
+            <linearGradient id="hb" x1="26" y1="0" x2="194" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"  stop-color="#20202e"/>
+              <stop offset="35%" stop-color="#141422"/>
+              <stop offset="68%" stop-color="#0e0e1a"/>
+              <stop offset="100%" stop-color="#07070a"/>
+            </linearGradient>
+            <linearGradient id="ht" x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"  stop-color="#32324a"/>
+              <stop offset="100%" stop-color="#10101a"/>
+            </linearGradient>
+            <linearGradient id="hbot" x1="0" y1="0" x2="0" y2="1" gradientUnits="userSpaceOnUse">
+              <stop offset="0%"  stop-color="#10101a"/>
+              <stop offset="100%" stop-color="#04040c"/>
+            </linearGradient>
+            <linearGradient id="hlbl" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%"   stop-color="transparent"/>
+              <stop offset="50%"  stop-color="#e03218"/>
+              <stop offset="100%" stop-color="transparent"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="can-shad"></div>
+    </div>
+
+    <!-- 4 · META ROW -->
+    <div class="h-meta">
+      <span class="h-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        100% Natural
+      </span>
+      <div class="h-meta-sep"></div>
+      <span class="h-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Bulk Orders
+      </span>
+      <div class="h-meta-sep"></div>
+      <span class="h-meta-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Pakistan-Wide
+      </span>
+    </div>
+
+    <!-- 5 · SUBTEXT -->
+    <p class="h-sub">
+      Premium craft sodas brewed for those who refuse ordinary.<br/>
+      Bold flavors. Zero compromise.
+    </p>
+
+    <!-- 6 · CTA -->
+    <div class="h-cta">
+      <a href="#products" class="btn btn-fill btn-lg">
+        Explore Flavors
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <a href="#about" class="btn btn-line btn-lg">Our Story</a>
+    </div>
+
+    <!-- 7 · STATS -->
+    <div class="h-stats">
+      <div class="h-stat">
+        <div class="h-stat-n">12+</div>
+        <div class="h-stat-l">Flavors</div>
+      </div>
+      <div class="h-stat" style="border-left:1px solid var(--b0)">
+        <div class="h-stat-n">50K</div>
+        <div class="h-stat-l">Cans Sold</div>
+      </div>
+      <div class="h-stat" style="border-left:1px solid var(--b0)">
+        <div class="h-stat-n">100%</div>
+        <div class="h-stat-l">Natural</div>
       </div>
     </div>
-  </div>
+
+  </div><!-- /hero-inner -->
 
   <div class="hero-foot">
     <div class="scroll-hint">
       <div class="scroll-line"></div>
       <span class="ts-label">Scroll</span>
     </div>
-    <span class="ts-label">Lahore · Pakistan</span>
+    <span class="ts-label">Est. Lahore · 2022</span>
   </div>
 </section>
 
