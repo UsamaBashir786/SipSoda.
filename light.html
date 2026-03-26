@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SipSoda — Premium Drinks & Shakes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:  #000;
+  --s1:  #0a0a0a;
+  --s2:  #111;
+  --s3:  #1a1a1a;
+  --b1:  rgba(255,255,255,.08);
+  --b2:  rgba(255,255,255,.14);
+  --b3:  rgba(255,255,255,.24);
+  --red: #ff3b2f;
+  --r2:  #ff6b5b;
+  --rda: rgba(255,59,47,.12);
+  --rdg: rgba(255,59,47,.05);
+  --w:   #f5f5f7;
+  --w2:  rgba(245,245,247,.60);
+  --w3:  rgba(245,245,247,.36);
+  --w4:  rgba(245,245,247,.08);
+  --FD:  'Outfit', sans-serif;
+  --F:   'DM Sans', sans-serif;
+  --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+  --spring: cubic-bezier(0.16,1,0.3,1);
+  --t1: 180ms;  --t2: 320ms;  --t3: 560ms;
+  --r8:8px; --r12:12px; --r16:16px; --r20:20px; --rpill:999px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{background:var(--bg);color:var(--w);font-family:var(--F);-webkit-font-smoothing:antialiased;overflow-x:hidden;cursor:none;}
+a{text-decoration:none;color:inherit;}
+button{font-family:var(--F);}
+img,svg{display:block;}
+::-webkit-scrollbar{width:0;}
+::selection{background:rgba(255,59,47,.25);color:var(--w);}
+
+/* ---- CUSTOM CURSOR (desktop only) ---- */
+#C-dot,#C-ring{display:none;}
+@media(hover:hover) and (pointer:fine){
+  #C-dot{display:block;position:fixed;z-index:99999;pointer-events:none;width:8px;height:8px;border-radius:50%;background:var(--w);transform:translate(-50%,-50%);transition:width var(--t1) var(--spring),height var(--t1) var(--spring);}
+  #C-ring{display:block;position:fixed;z-index:99998;pointer-events:none;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(245,245,247,.35);transform:translate(-50%,-50%);transition:width var(--t2) var(--spring),height var(--t2) var(--spring);}
+  body{cursor:none;}
+  body.hov #C-dot{width:14px;height:14px;background:rgba(245,245,247,.3);}
+  body.hov #C-ring{width:50px;height:50px;border-color:rgba(245,245,247,.6);}
+}
+@media(hover:none),(pointer:coarse){body{cursor:auto;}}
+
+/* grain */
+body::after{content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.2;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");}
+
+/* ---- LAYOUT ---- */
+.W{max-width:1200px;margin:0 auto;padding:0 40px;}
+@media(max-width:860px){.W{padding:0 24px;}}
+@media(max-width:480px){.W{padding:0 16px;}}
+
+/* ---- TYPE ---- */
+.apple-eye-sm{font-family:var(--F);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:14px;display:block;}
+.a-h1{font-family:var(--FD);font-size:clamp(32px,5.5vw,68px);font-weight:700;letter-spacing:-.04em;line-height:1.05;color:var(--w);}
+.a-h2{font-family:var(--FD);font-size:clamp(22px,3.5vw,44px);font-weight:700;letter-spacing:-.035em;line-height:1.08;color:var(--w);}
+.a-copy{font-size:17px;font-weight:400;letter-spacing:-.01em;line-height:1.6;color:var(--w2);}
+.a-copy-sm{font-size:14px;font-weight:400;line-height:1.57;color:var(--w3);}
+.accent{color:var(--red);}
+
+/* ---- SCROLL REVEAL ---- */
+.sr{opacity:0;transform:translateY(18px);transition:opacity var(--t3) var(--ease),transform var(--t3) var(--ease);}
+.sr.on{opacity:1;transform:none;}
+.sr.d1{transition-delay:.06s}.sr.d2{transition-delay:.12s}
+.sr.d3{transition-delay:.18s}.sr.d4{transition-delay:.24s}
+
+/* ---- BUTTONS ---- */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--F);font-weight:600;letter-spacing:-.01em;border:none;border-radius:var(--rpill);cursor:pointer;white-space:nowrap;line-height:1;transition:transform var(--t1) var(--spring),box-shadow var(--t1) var(--spring),background var(--t1);}
+.btn-sm{font-size:13px;padding:10px 20px;}
+.btn-md{font-size:15px;padding:13px 26px;}
+.btn-lg{font-size:17px;padding:16px 32px;}
+.btn-fill{background:var(--red);color:#fff;}
+.btn-fill:hover{background:var(--r2);transform:scale(1.02);box-shadow:0 8px 28px rgba(255,59,47,.32);}
+.btn-fill:active{transform:scale(0.98);}
+.btn-glass{background:rgba(255,255,255,.1);color:var(--w);backdrop-filter:blur(20px);border:1px solid var(--b2);}
+.btn-glass:hover{background:rgba(255,255,255,.16);transform:scale(1.02);}
+.btn-outline{background:transparent;color:var(--w);border:1.5px solid var(--b2);}
+.btn-outline:hover{border-color:var(--b3);background:var(--w4);transform:scale(1.02);}
+.btn-wh{display:inline-flex;align-items:center;gap:8px;font-family:var(--F);font-size:17px;font-weight:600;padding:16px 32px;border-radius:var(--rpill);background:#fff;color:#000;cursor:pointer;line-height:1;border:none;transition:opacity var(--t1),transform var(--t1) var(--spring);}
+.btn-wh:hover{opacity:.88;transform:scale(1.02);}
+.btn-blk{display:inline-flex;align-items:center;gap:8px;font-family:var(--F);font-size:17px;font-weight:600;padding:15px 30px;border-radius:var(--rpill);background:transparent;color:#fff;border:2px solid rgba(255,255,255,.4);cursor:pointer;line-height:1;transition:background var(--t1),border-color var(--t1);}
+.btn-blk:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.7);}
+.chip{display:inline-flex;align-items:center;font-size:11px;font-weight:600;letter-spacing:.04em;padding:4px 10px;border-radius:var(--rpill);background:var(--w4);color:var(--w3);border:1px solid var(--b1);line-height:1;}
+
+/* ==== NAV ==== */
+#nav{position:fixed;top:0;left:0;right:0;z-index:9000;height:52px;background:rgba(0,0,0,.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(255,255,255,.08);}
+.nav-row{max-width:1200px;margin:0 auto;padding:0 20px;height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.nav-logo{font-family:var(--FD);font-size:20px;font-weight:700;letter-spacing:-.04em;color:var(--w);flex-shrink:0;}
+.nav-logo span{color:var(--red);}
+.nav-links{display:flex;list-style:none;gap:0;}
+.nav-links a{font-size:13px;font-weight:500;color:var(--w3);padding:6px 12px;border-radius:var(--r8);transition:color var(--t1),background var(--t1);}
+.nav-links a:hover{color:var(--w);background:rgba(255,255,255,.06);}
+.nav-r{display:flex;align-items:center;gap:8px;}
+.nav-wa-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--F);font-size:13px;font-weight:600;padding:8px 14px;border-radius:var(--rpill);background:rgba(255,255,255,.1);color:var(--w);border:1px solid var(--b2);}
+
+/* CART BUTTON in NAV */
+.nav-cart-btn{position:relative;display:inline-flex;align-items:center;gap:7px;font-family:var(--F);font-size:13px;font-weight:600;padding:8px 16px;border-radius:var(--rpill);background:var(--red);color:#fff;border:none;cursor:pointer;transition:background var(--t1),transform var(--t1) var(--spring);}
+.nav-cart-btn:hover{background:var(--r2);transform:scale(1.04);}
+.nav-cart-btn:active{transform:scale(0.97);}
+.nav-cart-count{position:absolute;top:-5px;right:-5px;width:18px;height:18px;border-radius:50%;background:#fff;color:var(--red);font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0);transition:opacity var(--t1) var(--spring),transform var(--t1) var(--spring);}
+.nav-cart-count.vis{opacity:1;transform:scale(1);}
+
+/* hamburger */
+.mob-menu-btn{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--w);align-items:center;justify-content:center;border-radius:var(--r8);transition:background var(--t1);}
+.mob-menu-btn:active{background:rgba(255,255,255,.08);}
+
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .nav-wa-link{display:none;}
+  .mob-menu-btn{display:flex;}
+  .nav-row{padding:0 16px;}
+}
+@media(max-width:360px){
+  .nav-logo{font-size:17px;}
+  .nav-cart-btn{padding:8px 12px;font-size:12px;}
+  .nav-cart-btn svg{width:13px;height:13px;}
+}
+
+/* ---- MOB NAV OVERLAY ---- */
+#mob-nav-overlay{position:fixed;top:52px;left:0;right:0;bottom:0;z-index:8999;background:rgba(0,0,0,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);display:none;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:32px 24px 40px;overflow-y:auto;}
+#mob-nav-overlay.open{display:flex;}
+.mob-nav-link{font-family:var(--FD);font-size:clamp(28px,8vw,36px);font-weight:700;letter-spacing:-.04em;color:rgba(245,245,247,.85);padding:18px 0;width:100%;text-align:center;border-bottom:1px solid rgba(255,255,255,.06);transition:color var(--t1);}
+.mob-nav-link:active{color:var(--red);}
+.mob-nav-cart-btn{margin-top:28px;font-size:17px;font-weight:600;padding:15px 40px;background:var(--red);color:#fff;border-radius:999px;font-family:var(--FD);text-align:center;border:none;cursor:pointer;width:100%;max-width:280px;transition:background var(--t1);}
+.mob-nav-cart-btn:active{background:var(--r2);}
+
+/* ==== HERO ==== */
+#hero{position:relative;overflow:hidden;min-height:100svh;padding-top:52px;display:flex;flex-direction:column;align-items:center;background:var(--bg);}
+.hero-glow{position:absolute;pointer-events:none;border-radius:50%;filter:blur(100px);}
+.hg1{width:700px;height:600px;top:52px;left:50%;transform:translateX(-50%);background:radial-gradient(circle,rgba(255,59,47,.2) 0%,transparent 55%);}
+.hg2{width:500px;height:500px;bottom:-80px;right:-80px;background:radial-gradient(circle,rgba(255,100,0,.1) 0%,transparent 60%);}
+.hero-grid{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(255,255,255,.055) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 80% 50% at 50% 0%,black,transparent);}
+.hero-wrap{flex:1;position:relative;z-index:2;width:100%;max-width:900px;padding:72px 20px 48px;display:flex;flex-direction:column;align-items:center;text-align:center;}
+
+.h-eye{display:inline-flex;align-items:center;gap:8px;padding:5px 14px;border-radius:var(--rpill);background:rgba(255,59,47,.1);border:1px solid rgba(255,59,47,.25);margin-bottom:22px;animation:fadeUp .6s .05s var(--spring) both;}
+.h-eye-dot{width:5px;height:5px;border-radius:50%;background:var(--red);box-shadow:0 0 8px rgba(255,59,47,.9);animation:blink 2.2s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+.h-eye-text{font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--red);}
+
+.h-title{margin-bottom:18px;animation:fadeUp .9s .12s var(--spring) both;}
+.h-title-main{display:block;font-size:clamp(44px,11vw,148px);font-weight:900;letter-spacing:-.055em;line-height:.90;color:var(--w);}
+.h-title-main.red{color:var(--red);}
+.h-title-sub{display:block;font-size:clamp(22px,5.5vw,72px);font-weight:800;letter-spacing:-.045em;line-height:.96;color:var(--w3);margin-top:10px;}
+
+.h-tag{font-size:clamp(15px,2.2vw,22px);font-weight:300;letter-spacing:-.01em;color:var(--w2);line-height:1.55;max-width:480px;margin:16px auto 28px;animation:fadeUp .7s .22s var(--spring) both;}
+.h-tag strong{font-weight:600;color:var(--w);}
+
+.h-cup-wrap{position:relative;width:180px;height:270px;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:fadeUp .9s .30s var(--spring) both;}
+.cup-glow{position:absolute;inset:-28%;border-radius:50%;background:radial-gradient(circle,rgba(255,59,47,.22) 0%,transparent 58%);animation:glowPulse 4s ease-in-out infinite;}
+@keyframes glowPulse{0%,100%{opacity:.48;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.cup-float{animation:cupFloat 7s ease-in-out infinite;}
+@keyframes cupFloat{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-16px) rotate(1.2deg)}}
+.cup-shad{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:76px;height:10px;border-radius:50%;background:rgba(255,59,47,.24);filter:blur(9px);animation:shadAnim 7s ease-in-out infinite;}
+@keyframes shadAnim{0%,100%{width:76px;opacity:.5}50%{width:48px;opacity:.18}}
+.orb{position:absolute;border-radius:50%;border:1px dashed rgba(255,59,47,.12);top:50%;left:50%;animation:spinOrb 36s linear infinite;}
+.orb-a{width:220px;height:220px;transform:translate(-50%,-50%);}
+.orb-b{width:310px;height:310px;transform:translate(-50%,-50%);animation-direction:reverse;animation-duration:52s;}
+@keyframes spinOrb{to{transform:translate(-50%,-50%) rotate(360deg)}}
+.orb-pip{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--red);top:-2px;left:50%;margin-left:-2px;box-shadow:0 0 8px rgba(255,59,47,.9);}
+.orb-pip-b{top:auto;bottom:-2px;}
+
+.h-specs{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px;margin-bottom:28px;animation:fadeUp .7s .38s var(--spring) both;}
+.h-spec{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--w3);}
+.h-spec svg{width:13px;height:13px;stroke:var(--red);fill:none;}
+.h-spec-sep{width:1px;height:12px;background:var(--b2);}
+
+.h-cta{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:36px;animation:fadeUp .7s .46s var(--spring) both;}
+
+.h-stats{width:100%;max-width:380px;display:grid;grid-template-columns:repeat(3,1fr);background:var(--b1);gap:1px;border:1px solid var(--b1);border-radius:var(--r20);overflow:hidden;animation:fadeUp .7s .54s var(--spring) both;}
+.h-stat{background:var(--s1);padding:14px 16px;display:flex;flex-direction:column;align-items:center;gap:3px;}
+.h-stat-n{font-size:clamp(20px,5vw,26px);font-weight:800;letter-spacing:-.04em;color:var(--w);}
+.h-stat-l{font-size:9px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--w3);}
+
+.hero-foot{position:relative;z-index:2;width:100%;max-width:1200px;padding:0 20px 20px;display:flex;align-items:center;justify-content:space-between;}
+.hf-scroll{display:flex;align-items:center;gap:12px;}
+.hf-line{width:22px;height:1px;background:linear-gradient(90deg,var(--red),transparent);}
+.hf-text{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--w3);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* Hero mobile */
+@media(max-width:480px){
+  .hero-wrap{padding:56px 16px 32px;}
+  .h-cup-wrap{width:150px;height:220px;}
+  .orb-a{width:180px;height:180px;}
+  .orb-b{width:260px;height:260px;}
+  .h-spec-sep{display:none;}
+  .h-cta{flex-direction:column;width:100%;}
+  .h-cta .btn{width:100%;max-width:320px;justify-content:center;}
+  .h-stats{max-width:100%;}
+  .hero-foot .hf-text:last-child{display:none;}
+}
+@media(max-width:360px){
+  .h-cup-wrap{width:130px;height:190px;}
+  .orb-a{width:160px;height:160px;}
+  .orb-b{width:230px;height:230px;}
+}
+
+/* ==== TICKER ==== */
+.ticker{height:36px;overflow:hidden;background:var(--s1);border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);display:flex;align-items:center;}
+.ticker-track{display:flex;animation:tkScroll 22s linear infinite;white-space:nowrap;}
+@keyframes tkScroll{to{transform:translateX(-50%)}}
+.tk{display:inline-flex;align-items:center;gap:40px;padding:0 20px;}
+.tk-t{font-family:var(--F);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--w3);}
+.tk-d{width:3px;height:3px;border-radius:50%;background:var(--red);}
+
+/* ==== MENU SECTION ==== */
+#menu{background:var(--s1);padding-top:80px;padding-bottom:80px;border-top:1px solid var(--b1);}
+
+.cat-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:40px;}
+.cat-tab{font-size:13px;font-weight:600;letter-spacing:-.01em;padding:9px 16px;border-radius:var(--rpill);background:var(--s2);border:1px solid var(--b1);color:var(--w3);cursor:pointer;transition:background var(--t1),border-color var(--t1),color var(--t1);-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.cat-tab:hover,.cat-tab.active{background:var(--red);border-color:var(--red);color:#fff;}
+.cat-tab:active{transform:scale(0.97);}
+
+/* Scrollable tabs on mobile */
+@media(max-width:640px){
+  .cat-tabs{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px;gap:6px;}
+  .cat-tabs::-webkit-scrollbar{display:none;}
+  .cat-tab{flex-shrink:0;font-size:12px;padding:8px 14px;}
+}
+
+.menu-cat{display:none;}
+.menu-cat.active{display:block;}
+
+.menu-section-label{font-family:var(--FD);font-size:clamp(20px,3vw,32px);font-weight:700;letter-spacing:-.035em;color:var(--w);margin-bottom:6px;}
+.menu-section-sub{font-size:14px;color:var(--w3);margin-bottom:24px;}
+
+/* MENU CARD */
+.menu-card{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r20);overflow:hidden;margin-bottom:16px;}
+.menu-card-head{display:grid;padding:12px 16px;border-bottom:1px solid var(--b1);}
+.menu-card-head.cols-2{grid-template-columns:1fr 80px 80px 100px;}
+.menu-card-head.cols-1{grid-template-columns:1fr 90px 100px;}
+.menu-card-head.cols-3{grid-template-columns:1fr 60px 60px 60px 100px;}
+.menu-col{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--w3);text-align:right;}
+.menu-col:first-child{text-align:left;}
+.menu-col.act-col{color:var(--red);}
+
+/* MENU ROW */
+.menu-row{display:grid;padding:13px 16px;border-bottom:1px solid rgba(255,255,255,.04);transition:background var(--t1);-webkit-tap-highlight-color:transparent;}
+.menu-row:last-child{border-bottom:none;}
+.menu-row.cols-2{grid-template-columns:1fr 80px 80px 100px;}
+.menu-row.cols-1{grid-template-columns:1fr 90px 100px;}
+.menu-row.cols-3{grid-template-columns:1fr 60px 60px 60px 100px;}
+.menu-row:hover{background:rgba(255,59,47,.04);}
+.menu-item-name{font-size:14px;font-weight:500;color:var(--w);letter-spacing:-.01em;align-self:center;}
+.menu-price{font-size:14px;font-weight:600;color:var(--red);text-align:right;font-family:var(--FD);align-self:center;}
+.menu-price.dim{color:var(--w3);}
+
+/* ADD TO CART BTN inside rows */
+.add-cart-btn{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-family:var(--F);font-size:12px;font-weight:700;padding:7px 12px;border-radius:var(--rpill);background:rgba(255,59,47,.15);border:1px solid rgba(255,59,47,.3);color:var(--red);cursor:pointer;transition:background var(--t1),transform var(--t1) var(--spring),border-color var(--t1);white-space:nowrap;justify-self:end;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+.add-cart-btn:hover{background:var(--red);color:#fff;border-color:var(--red);transform:scale(1.05);}
+.add-cart-btn:active{transform:scale(0.95);background:var(--red);color:#fff;border-color:var(--red);}
+.add-cart-btn.added{background:rgba(48,209,88,.15);border-color:rgba(48,209,88,.35);color:#30d158;}
+.add-cart-btn svg{width:12px;height:12px;flex-shrink:0;}
+
+/* Mobile compact menu */
+@media(max-width:600px){
+  .menu-card-head.cols-2,.menu-row.cols-2{grid-template-columns:1fr 60px 60px 82px;}
+  .menu-card-head.cols-3,.menu-row.cols-3{grid-template-columns:1fr 50px 50px 50px 82px;}
+  .menu-card-head.cols-1,.menu-row.cols-1{grid-template-columns:1fr 80px 82px;}
+  .menu-price{font-size:13px;}
+  .menu-item-name{font-size:13px;}
+  .add-cart-btn .btn-label{display:none;}
+  .add-cart-btn{padding:7px 10px;}
+  .menu-card-head,.menu-row{padding:11px 12px;}
+}
+@media(max-width:380px){
+  .menu-card-head.cols-2,.menu-row.cols-2{grid-template-columns:1fr 52px 52px 72px;}
+  .menu-card-head.cols-3,.menu-row.cols-3{grid-template-columns:1fr 44px 44px 44px 72px;}
+  .menu-price,.menu-item-name{font-size:12px;}
+  .add-cart-btn{padding:6px 8px;}
+  .add-cart-btn svg{width:11px;height:11px;}
+}
+
+/* SIZE SELECTOR MODAL */
+.size-modal-overlay{position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity var(--t2) var(--ease);}
+.size-modal-overlay.open{opacity:1;pointer-events:all;}
+.size-modal{background:var(--s2);border:1px solid var(--b2);border-radius:24px 24px 0 0;padding:24px 20px 32px;width:100%;max-width:520px;transform:translateY(40px);transition:transform var(--t2) var(--spring);}
+.size-modal-overlay.open .size-modal{transform:translateY(0);}
+.size-modal-handle{width:40px;height:4px;border-radius:2px;background:var(--b2);margin:0 auto 18px;}
+.size-modal-title{font-family:var(--FD);font-size:19px;font-weight:700;letter-spacing:-.03em;color:var(--w);margin-bottom:5px;}
+.size-modal-sub{font-size:13px;color:var(--w3);margin-bottom:18px;}
+.size-opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;margin-bottom:18px;}
+.size-opt{background:var(--s3);border:1.5px solid var(--b1);border-radius:var(--r12);padding:14px 10px;text-align:center;cursor:pointer;transition:border-color var(--t1),background var(--t1),transform var(--t1) var(--spring);-webkit-tap-highlight-color:transparent;}
+.size-opt:hover{border-color:rgba(255,59,47,.4);background:rgba(255,59,47,.06);}
+.size-opt:active{transform:scale(0.97);}
+.size-opt.sel{border-color:var(--red);background:rgba(255,59,47,.1);}
+.size-opt-name{font-size:11px;font-weight:600;color:var(--w3);margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em;}
+.size-opt-price{font-family:var(--FD);font-size:20px;font-weight:700;color:var(--red);line-height:1;}
+.size-confirm-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;font-family:var(--F);font-size:16px;font-weight:700;padding:15px;border-radius:var(--rpill);background:var(--red);color:#fff;border:none;cursor:pointer;transition:background var(--t1),transform var(--t1) var(--spring);}
+.size-confirm-btn:hover{background:var(--r2);transform:scale(1.02);}
+.size-confirm-btn:active{transform:scale(0.98);}
+.size-confirm-btn:disabled{background:rgba(255,255,255,.1);color:var(--w3);transform:none;cursor:default;}
+.size-cancel{display:block;text-align:center;margin-top:12px;font-size:13px;color:var(--r2);cursor:pointer;padding:10px;-webkit-tap-highlight-color:transparent;}
+
+/* CART SIDEBAR */
+.cart-overlay{position:fixed;inset:0;z-index:9500;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity var(--t2) var(--ease);}
+.cart-overlay.open{opacity:1;pointer-events:all;}
+.cart-panel{position:fixed;top:0;right:0;bottom:0;z-index:9600;width:100%;max-width:400px;background:var(--s1);border-left:1px solid var(--b1);display:flex;flex-direction:column;transform:translateX(100%);transition:transform var(--t3) var(--spring);}
+.cart-overlay.open .cart-panel{transform:translateX(0);}
+.cart-head{padding:18px 16px 14px;border-bottom:1px solid var(--b1);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.cart-head-title{font-family:var(--FD);font-size:20px;font-weight:700;letter-spacing:-.04em;color:var(--w);}
+.cart-head-count{font-size:13px;font-weight:500;color:var(--w3);}
+.cart-close{width:32px;height:32px;border-radius:50%;background:var(--w4);border:none;color:var(--w3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background var(--t1);-webkit-tap-highlight-color:transparent;}
+.cart-close:hover{background:rgba(255,255,255,.12);}
+.cart-items{flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch;}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:var(--w3);}
+.cart-empty-icon{width:52px;height:52px;border-radius:14px;background:var(--w4);display:flex;align-items:center;justify-content:center;}
+.cart-empty-icon svg{width:22px;height:22px;stroke:var(--w3);fill:none;}
+.cart-empty p{font-size:15px;font-weight:500;}
+.cart-empty small{font-size:13px;color:var(--w3);opacity:.6;}
+.cart-item{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.cart-item:last-child{border-bottom:none;}
+.cart-item-emoji{width:38px;height:38px;border-radius:9px;background:rgba(255,59,47,.12);border:1px solid rgba(255,59,47,.18);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+.cart-item-info{flex:1;min-width:0;}
+.cart-item-name{font-size:13px;font-weight:600;color:var(--w);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cart-item-size{font-size:11px;font-weight:500;color:var(--w3);margin-top:2px;}
+.cart-item-price{font-family:var(--FD);font-size:14px;font-weight:700;color:var(--red);flex-shrink:0;}
+.cart-item-ctrl{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.qty-btn{width:26px;height:26px;border-radius:50%;background:var(--w4);border:none;color:var(--w);font-size:16px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:background var(--t1);-webkit-tap-highlight-color:transparent;}
+.qty-btn:active{background:rgba(255,255,255,.18);transform:scale(0.93);}
+.qty-num{font-size:14px;font-weight:700;color:var(--w);min-width:18px;text-align:center;}
+.cart-footer{padding:14px;border-top:1px solid var(--b1);flex-shrink:0;}
+.cart-total-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.cart-total-label{font-size:14px;font-weight:500;color:var(--w3);}
+.cart-total-val{font-family:var(--FD);font-size:22px;font-weight:800;letter-spacing:-.04em;color:var(--w);}
+.cart-wa-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--F);font-size:16px;font-weight:700;padding:15px;border-radius:var(--rpill);background:#25d366;color:#fff;border:none;cursor:pointer;transition:background var(--t1),transform var(--t1) var(--spring),box-shadow var(--t1);-webkit-tap-highlight-color:transparent;}
+.cart-wa-btn:hover{background:#1fb857;transform:scale(1.02);box-shadow:0 8px 28px rgba(37,211,102,.35);}
+.cart-wa-btn:active{transform:scale(0.98);}
+.cart-wa-btn:disabled{background:rgba(255,255,255,.08);color:var(--w3);transform:none;box-shadow:none;cursor:default;}
+.cart-clear-btn{display:block;text-align:center;margin-top:8px;font-size:12px;font-weight:500;color:var(--w3);cursor:pointer;padding:8px;border-radius:8px;background:none;border:none;transition:color var(--t1);width:100%;-webkit-tap-highlight-color:transparent;}
+.cart-clear-btn:hover{color:var(--red);}
+
+/* On small screens, cart takes full width */
+@media(max-width:440px){
+  .cart-panel{max-width:100%;border-left:none;}
+}
+
+/* CART TOAST */
+.cart-toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);z-index:9700;background:var(--s2);border:1px solid rgba(48,209,88,.3);border-radius:var(--rpill);padding:10px 18px;font-size:13px;font-weight:600;color:#30d158;white-space:nowrap;opacity:0;transition:opacity .25s,transform .25s var(--spring);pointer-events:none;max-width:calc(100vw - 32px);text-overflow:ellipsis;overflow:hidden;}
+.cart-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* FLAVOR SODA GRID */
+.soda-flavor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:20px;}
+@media(max-width:480px){
+  .soda-flavor-grid{grid-template-columns:repeat(2,1fr);gap:7px;}
+}
+.soda-flavor-card{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r12);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:border-color var(--t1),background var(--t1),transform var(--t1) var(--spring);-webkit-tap-highlight-color:transparent;}
+.soda-flavor-card:hover{border-color:rgba(255,59,47,.3);background:rgba(255,59,47,.05);transform:scale(1.02);}
+.soda-flavor-card:active{transform:scale(0.97);}
+.soda-flavor-name{font-size:13px;font-weight:500;color:var(--w);}
+.soda-flavor-add{width:24px;height:24px;border-radius:50%;background:rgba(255,59,47,.15);border:1px solid rgba(255,59,47,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background var(--t1);}
+.soda-flavor-card:hover .soda-flavor-add,.soda-flavor-card:active .soda-flavor-add{background:var(--red);}
+.soda-flavor-add svg{width:12px;height:12px;stroke:var(--red);fill:none;transition:stroke var(--t1);}
+.soda-flavor-card:hover .soda-flavor-add svg,.soda-flavor-card:active .soda-flavor-add svg{stroke:#fff;}
+
+/* SCOOP GRID */
+.scoop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+.scoop-card{background:var(--s2);border:1px solid var(--b1);border-radius:var(--r16);padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color var(--t2),transform var(--t2) var(--spring);}
+.scoop-card:hover{border-color:rgba(255,59,47,.28);transform:translateY(-3px);}
+.scoop-qty{font-size:13px;font-weight:600;color:var(--w3);letter-spacing:-.01em;}
+.scoop-price{font-family:var(--FD);font-size:26px;font-weight:700;letter-spacing:-.04em;color:var(--red);line-height:1;}
+.scoop-add-btn{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:700;padding:7px 14px;border-radius:var(--rpill);background:rgba(255,59,47,.15);border:1px solid rgba(255,59,47,.3);color:var(--red);cursor:pointer;transition:background var(--t1),transform var(--t1) var(--spring),border-color var(--t1);-webkit-tap-highlight-color:transparent;}
+.scoop-add-btn:hover{background:var(--red);color:#fff;border-color:var(--red);transform:scale(1.04);}
+.scoop-add-btn:active{transform:scale(0.96);background:var(--red);color:#fff;border-color:var(--red);}
+@media(max-width:380px){
+  .scoop-price{font-size:22px;}
+  .scoop-card{padding:16px;}
+}
+
+/* Flavor tags */
+.flavor-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px;}
+.flavor-tag{font-size:12px;font-weight:500;padding:5px 12px;border-radius:var(--rpill);background:var(--w4);border:1px solid var(--b1);color:var(--w3);}
+
+/* Note pill */
+.note-pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:var(--r12);background:rgba(255,59,47,.08);border:1px solid rgba(255,59,47,.18);font-size:13px;color:var(--w2);margin-bottom:20px;flex-wrap:wrap;}
+.note-pill strong{color:var(--red);}
+
+/* ==== FEATURES ==== */
+.section-dark{background:#000;padding:56px 0;border-top:1px solid var(--b1);}
+.feature-bar{max-width:1000px;margin:auto;display:grid;grid-template-columns:repeat(3,1fr);background:linear-gradient(145deg,#111,#1a1a1a);border-radius:28px;overflow:hidden;border:1px solid rgba(255,255,255,.08);}
+.feature-item{padding:36px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.feature-item:nth-child(2){border-left:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08);}
+.feature-icon{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.05);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.feature-icon svg{width:24px;height:24px;stroke:#cfcfcf;fill:none;}
+.feature-title{color:#fff;font-size:16px;font-weight:600;margin-bottom:5px;}
+.feature-sub{color:#888;font-size:13px;}
+@media(max-width:700px){
+  .section-dark{padding:40px 16px;}
+  .feature-bar{grid-template-columns:1fr;border-radius:20px;margin:0 16px;}
+  .feature-item:nth-child(2){border:none;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);}
+  .feature-item{padding:28px 20px;}
+}
+
+/* ==== ABOUT ==== */
+#about{background:var(--bg);padding-top:80px;padding-bottom:80px;border-top:1px solid var(--b1);}
+.about-grid-row{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.about-quote{border-left:2px solid var(--red);padding-left:22px;margin:24px 0;}
+.about-quote p{font-size:16px;font-weight:300;font-style:italic;color:var(--w2);line-height:1.72;}
+.stat-stack{display:flex;flex-direction:column;}
+.a-stat-box{display:flex;flex-direction:column;gap:4px;padding:24px 0;border-top:1px solid var(--b1);}
+.a-stat-n{font-family:var(--FD);font-size:clamp(32px,5vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--red);}
+.a-stat-l{font-size:14px;font-weight:400;color:var(--w3);line-height:1.45;}
+@media(max-width:800px){
+  .about-grid-row{grid-template-columns:1fr;gap:40px;}
+  #about{padding-top:64px;padding-bottom:64px;}
+}
+
+/* ==== FAQ ==== */
+#faq{background:var(--s1);padding-top:80px;padding-bottom:80px;border-top:1px solid var(--b1);}
+.faq-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:start;}
+.faq-list{display:flex;flex-direction:column;gap:4px;}
+.faq-item{border:1px solid var(--b1);border-radius:var(--r12);background:var(--s2);overflow:hidden;transition:border-color var(--t1);}
+.faq-item.open{border-color:rgba(255,59,47,.28);}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 18px;background:none;border:none;cursor:pointer;text-align:left;font-family:var(--F);font-size:14px;font-weight:500;color:var(--w);line-height:1.4;transition:background var(--t1);-webkit-tap-highlight-color:transparent;}
+.faq-q:hover{background:rgba(255,255,255,.04);}
+.faq-ico{width:24px;height:24px;flex-shrink:0;border-radius:50%;background:var(--w4);border:1px solid var(--b1);display:flex;align-items:center;justify-content:center;transition:transform var(--t2) var(--spring),background var(--t1);}
+.faq-item.open .faq-ico{transform:rotate(45deg);background:rgba(255,59,47,.12);border-color:rgba(255,59,47,.3);}
+.faq-ico svg{width:12px;height:12px;stroke:var(--w3);fill:none;transition:stroke var(--t1);}
+.faq-item.open .faq-ico svg{stroke:var(--red);}
+.faq-body{max-height:0;overflow:hidden;transition:max-height .38s var(--ease);}
+.faq-ans{padding:0 18px 16px;padding-top:12px;font-size:14px;color:var(--w3);line-height:1.7;border-top:1px solid var(--b1);}
+@media(max-width:720px){
+  .faq-layout{grid-template-columns:1fr;gap:36px;}
+  #faq{padding-top:64px;padding-bottom:64px;}
+}
+
+/* ==== CTA ==== */
+.cta-sec{position:relative;overflow:hidden;background:var(--red);}
+.cta-mesh{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(-45deg,transparent,transparent 18px,rgba(0,0,0,.05) 18px,rgba(0,0,0,.05) 19px);}
+.cta-inner{position:relative;z-index:1;text-align:center;padding:100px 24px;max-width:1200px;margin:0 auto;}
+.cta-title{font-family:var(--FD);font-size:clamp(40px,10vw,112px);font-weight:700;letter-spacing:-.05em;line-height:.92;color:#fff;margin-bottom:20px;}
+.cta-sub{font-size:18px;font-weight:300;font-style:italic;color:rgba(255,255,255,.7);max-width:380px;margin:0 auto 40px;line-height:1.6;}
+.cta-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+@media(max-width:480px){
+  .cta-inner{padding:64px 16px;}
+  .cta-sub{font-size:16px;}
+  .cta-btns{flex-direction:column;align-items:center;}
+  .cta-btns .btn-wh,.cta-btns .btn-blk{width:100%;max-width:280px;justify-content:center;}
+}
+
+/* ==== CONTACT ==== */
+#contact{background:var(--bg);padding-top:80px;padding-bottom:80px;border-top:1px solid var(--b1);}
+.cnt-layout{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;}
+.F-stack{display:flex;flex-direction:column;gap:18px;}
+.F-grp{display:flex;flex-direction:column;gap:7px;}
+.F-lbl{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--w3);}
+.F-field{width:100%;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r12);padding:13px 16px;font-family:var(--F);font-size:15px;color:var(--w);outline:none;transition:border-color var(--t1),background var(--t1);}
+.F-field:focus{border-color:rgba(255,59,47,.5);background:rgba(255,59,47,.04);}
+.F-field::placeholder{color:var(--w3);}
+.F-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+#F-ok{display:none;padding:13px 16px;border-radius:var(--r12);background:rgba(48,209,88,.1);border:1px solid rgba(48,209,88,.25);font-size:14px;font-weight:600;color:#30d158;margin-top:6px;}
+.C-cards{display:flex;flex-direction:column;gap:10px;}
+.C-card{display:flex;align-items:flex-start;gap:12px;background:var(--s2);border:1px solid var(--b1);border-radius:var(--r16);padding:16px;transition:border-color var(--t1);}
+.C-card:hover{border-color:var(--b2);}
+.C-ico{width:34px;height:34px;flex-shrink:0;border-radius:9px;background:rgba(255,59,47,.12);border:1px solid rgba(255,59,47,.2);display:flex;align-items:center;justify-content:center;}
+.C-ico svg{width:15px;height:15px;stroke:var(--red);fill:none;}
+.C-title{font-size:13px;font-weight:600;color:var(--w);margin-bottom:3px;}
+.C-val{font-size:13px;color:var(--w3);line-height:1.55;}
+.C-val a{color:var(--red);}
+@media(max-width:720px){
+  .cnt-layout{grid-template-columns:1fr;gap:40px;}
+  .F-row{grid-template-columns:1fr;}
+  #contact{padding-top:64px;padding-bottom:64px;}
+}
+
+/* ==== FOOTER ==== */
+.site-footer{background:var(--bg);border-top:1px solid var(--b1);}
+.footer-row{max-width:1200px;margin:0 auto;padding:48px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.ft-logo{font-size:18px;font-weight:800;letter-spacing:-.04em;color:var(--w);}
+.ft-logo span{color:var(--red);}
+.ft-links{display:flex;flex-wrap:wrap;gap:0;}
+.ft-links a{font-size:13px;font-weight:500;color:var(--w3);padding:6px 12px;border-radius:8px;transition:color var(--t1),background var(--t1);min-height:36px;display:flex;align-items:center;-webkit-tap-highlight-color:transparent;}
+.ft-links a:hover{color:var(--w);background:rgba(255,255,255,.06);}
+.ft-copy{font-size:12px;color:var(--w3);opacity:.4;}
+@media(max-width:560px){
+  .footer-row{flex-direction:column;align-items:center;text-align:center;padding:32px 16px;gap:12px;}
+  .ft-links{justify-content:center;}
+}
+
+/* ==== WA FLOATING ==== */
+.wa{position:fixed;bottom:20px;right:16px;z-index:9000;width:48px;height:48px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.36);transition:transform var(--t1) var(--spring),box-shadow var(--t1);}
+.wa:hover{transform:scale(1.1);box-shadow:0 8px 24px rgba(37,211,102,.52);}
+.wa:active{transform:scale(0.95);}
+@media(max-width:480px){
+  .wa{bottom:16px;right:12px;width:44px;height:44px;}
+  .wa svg{width:22px;height:22px;}
+}
+.btn[type="submit"]{
+  align-self: baseline;
+}
+</style>
+</head>
+<body>
+
+<div id="C-dot"></div>
+<div id="C-ring"></div>
+
+<!-- CART TOAST -->
+<div class="cart-toast" id="cart-toast">✓ Added!</div>
+
+<!-- SIZE SELECTOR MODAL -->
+<div class="size-modal-overlay" id="size-modal">
+  <div class="size-modal">
+    <div class="size-modal-handle"></div>
+    <div class="size-modal-title" id="sm-title">Choose Size</div>
+    <div class="size-modal-sub" id="sm-sub">Select your preferred size</div>
+    <div class="size-opts" id="sm-opts"></div>
+    <button class="size-confirm-btn" id="sm-confirm" disabled onclick="confirmSize()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Add to Cart
+    </button>
+    <button class="size-cancel" onclick="closeSizeModal()">Cancel</button>
+  </div>
+</div>
+
+<!-- CART OVERLAY + PANEL -->
+<div class="cart-overlay" id="cart-overlay" onclick="cartOverlayClick(event)">
+  <div class="cart-panel" id="cart-panel">
+    <div class="cart-head">
+      <div>
+        <div class="cart-head-title">🛒 Your Cart</div>
+        <div class="cart-head-count" id="cart-head-count">0 items</div>
+      </div>
+      <button class="cart-close" onclick="closeCart()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cart-items-list">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <p>Cart is empty</p>
+        <small>Add items from the menu!</small>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Total</span>
+        <span class="cart-total-val" id="cart-total">₨0</span>
+      </div>
+      <button class="cart-wa-btn" id="cart-wa-btn" onclick="sendToWhatsApp()" disabled>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Order via WhatsApp
+      </button>
+      <button class="cart-clear-btn" onclick="clearCart()">Clear cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- WA FLOAT -->
+<a class="wa" href="https://wa.me/923000000000" aria-label="WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-row">
+    <div class="nav-logo">Sip<span>Soda</span></div>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="nav-r">
+      <a href="https://wa.me/923000000000" class="nav-wa-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        WhatsApp
+      </a>
+      <button class="nav-cart-btn" onclick="openCart()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Cart
+        <span class="nav-cart-count" id="nav-cart-count">0</span>
+      </button>
+      <button class="mob-menu-btn" id="mob-menu-btn" aria-label="Menu">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" id="mob-icon"><rect y="3" width="20" height="2" rx="1"/><rect y="9" width="20" height="2" rx="1"/><rect y="15" width="20" height="2" rx="1"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOB NAV OVERLAY -->
+<div id="mob-nav-overlay">
+  <a href="#menu" class="mob-nav-link">Menu</a>
+  <a href="#about" class="mob-nav-link">About</a>
+  <a href="#faq" class="mob-nav-link">FAQ</a>
+  <a href="#contact" class="mob-nav-link">Contact</a>
+  <button class="mob-nav-cart-btn" onclick="closeMobNav();openCart()">🛒 View Cart</button>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow hg1"></div>
+  <div class="hero-glow hg2"></div>
+
+  <div class="hero-wrap">
+    <div class="h-eye">
+      <div class="h-eye-dot"></div>
+      <span class="h-eye-text">Fresh Menu — 2025</span>
+    </div>
+
+    <div class="h-title">
+      <span class="h-title-main">Sip the</span>
+      <span class="h-title-main red">Good Stuff.</span>
+      <span class="h-title-sub">We Don't Do Average.</span>
+    </div>
+
+    <p class="h-tag">
+      Fresh slushes, premium shakes &amp; craft sodas.<br/>
+      <strong>Bold flavors. Real ingredients.</strong>
+    </p>
+
+    <div class="h-cup-wrap">
+      <div class="orb orb-a"><div class="orb-pip"></div></div>
+      <div class="orb orb-b"><div class="orb-pip orb-pip-b"></div></div>
+      <div class="cup-glow"></div>
+      <div class="cup-float">
+        <svg width="170" height="290" viewBox="0 0 190 310" fill="none" style="filter:drop-shadow(0 40px 80px rgba(255,59,47,.44))">
+          <rect x="118" y="0" width="10" height="120" rx="5" fill="#ff3b2f" opacity=".85"/>
+          <rect x="119" y="0" width="4" height="120" rx="2" fill="rgba(255,255,255,.25)"/>
+          <path d="M30 80 L18 290 Q18 302 30 302 L160 302 Q172 302 172 290 L160 80 Z" fill="url(#cupBody)"/>
+          <path d="M35 130 L25 290 Q25 298 35 298 L155 298 Q165 298 165 290 L155 130 Z" fill="url(#liquid)" opacity=".9"/>
+          <rect x="55" y="190" width="28" height="28" rx="6" fill="rgba(255,255,255,.22)" transform="rotate(-12 69 204)"/>
+          <rect x="95" y="200" width="24" height="24" rx="5" fill="rgba(255,255,255,.18)" transform="rotate(8 107 212)"/>
+          <rect x="75" y="225" width="20" height="20" rx="5" fill="rgba(255,255,255,.15)" transform="rotate(-5 85 235)"/>
+          <circle cx="70" cy="170" r="4" fill="rgba(255,255,255,.18)"/>
+          <circle cx="110" cy="180" r="3" fill="rgba(255,255,255,.12)"/>
+          <circle cx="85" cy="155" r="2.5" fill="rgba(255,255,255,.14)"/>
+          <circle cx="120" cy="160" r="3.5" fill="rgba(255,255,255,.1)"/>
+          <ellipse cx="95" cy="80" rx="65" ry="14" fill="#1a1a1a"/>
+          <ellipse cx="95" cy="80" rx="62" ry="11" fill="#222"/>
+          <path d="M42 76 Q95 68 148 76" stroke="rgba(255,255,255,.12)" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <ellipse cx="95" cy="302" rx="70" ry="8" fill="rgba(0,0,0,.3)"/>
+          <defs>
+            <linearGradient id="cupBody" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#1a1a1a"/>
+              <stop offset="35%" stop-color="#222"/>
+              <stop offset="70%" stop-color="#181818"/>
+              <stop offset="100%" stop-color="#0f0f0f"/>
+            </linearGradient>
+            <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff6b2f" stop-opacity=".9"/>
+              <stop offset="40%" stop-color="#ff3b2f" stop-opacity=".85"/>
+              <stop offset="100%" stop-color="#c01800" stop-opacity=".95"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="cup-shad"></div>
+    </div>
+
+    <div class="h-specs">
+      <span class="h-spec">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        100% Fresh
+      </span>
+      <div class="h-spec-sep"></div>
+      <span class="h-spec">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        Bulk Orders
+      </span>
+      <div class="h-spec-sep"></div>
+      <span class="h-spec">
+        <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        Fast Delivery
+      </span>
+    </div>
+
+    <div class="h-cta">
+      <a href="#menu" class="btn btn-fill btn-lg">
+        View Menu
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      <button class="btn btn-glass btn-lg" onclick="openCart()">🛒 View Cart</button>
+    </div>
+
+    <div class="h-stats">
+      <div class="h-stat"><div class="h-stat-n">8</div><div class="h-stat-l">Categories</div></div>
+      <div class="h-stat" style="border-left:1px solid var(--b1)"><div class="h-stat-n">50+</div><div class="h-stat-l">Items</div></div>
+      <div class="h-stat" style="border-left:1px solid var(--b1)"><div class="h-stat-n">100%</div><div class="h-stat-l">Fresh</div></div>
+    </div>
+  </div>
+
+  <div class="hero-foot">
+    <div class="hf-scroll"><div class="hf-line"></div><span class="hf-text">Scroll</span></div>
+    <span class="hf-text">Pakistan · Est. 2022</span>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span class="tk"><span class="tk-t">Fresh Slush</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Ice Cream Shake</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Milk Shake</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Fresh Soda</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Cold Coffee</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Hico Ice Cream</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Scoop Cone</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Bold Flavors</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Fresh Slush</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Ice Cream Shake</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Milk Shake</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Fresh Soda</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Cold Coffee</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Hico Ice Cream</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Scoop Cone</span><span class="tk-d"></span></span>
+    <span class="tk"><span class="tk-t">Bold Flavors</span><span class="tk-d"></span></span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="W">
+    <div class="sr" style="margin-bottom:40px">
+      <span class="apple-eye-sm">Full Menu</span>
+      <h2 class="a-h1" style="margin-bottom:14px">Pick Your <span style="color:var(--red)">Flavor.</span></h2>
+      <p class="a-copy" style="max-width:500px">Every sip crafted for those who demand more. Tap any item to add it to your cart, then order via WhatsApp!</p>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="cat-tabs sr">
+      <button class="cat-tab active" onclick="showCat('slush',this)">🧊 Fruit Slush</button>
+      <button class="cat-tab" onclick="showCat('iceshake',this)">🍦 Ice Cream Shake</button>
+      <button class="cat-tab" onclick="showCat('milkshake',this)">🥛 Milk Shake</button>
+      <button class="cat-tab" onclick="showCat('specialty',this)">⭐ Specialty</button>
+      <button class="cat-tab" onclick="showCat('soda',this)">🫧 Fresh Soda</button>
+      <button class="cat-tab" onclick="showCat('juice',this)">🍹 Juice & Doodh Soda</button>
+      <button class="cat-tab" onclick="showCat('hico',this)">🍨 Hico Ice Cream</button>
+      <button class="cat-tab" onclick="showCat('cone',this)">🍦 Scoop Cone</button>
+    </div>
+
+    <!-- 1. FRESH FRUIT SLUSH -->
+    <div class="menu-cat active sr" id="cat-slush">
+      <div class="menu-section-label">Fresh Fruits Slush</div>
+      <div class="menu-section-sub">Chilled, blended fresh fruit slushes — choose Small or Large.</div>
+      <div class="menu-card">
+        <div class="menu-card-head cols-2">
+          <span class="menu-col">Item</span>
+          <span class="menu-col">Small</span>
+          <span class="menu-col">Large</span>
+          <span class="menu-col act-col">Add</span>
+        </div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🧊 Mint Margarita</span><span class="menu-price">₨140</span><span class="menu-price">₨200</span><button class="add-cart-btn" onclick="openSizeModal('Mint Margarita','🧊',[{n:'Small',p:140},{n:'Large',p:200}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🥭 Mango</span><span class="menu-price">₨140</span><span class="menu-price">₨200</span><button class="add-cart-btn" onclick="openSizeModal('Mango Slush','🥭',[{n:'Small',p:140},{n:'Large',p:200}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍑 Peach</span><span class="menu-price">₨140</span><span class="menu-price">₨200</span><button class="add-cart-btn" onclick="openSizeModal('Peach Slush','🍑',[{n:'Small',p:140},{n:'Large',p:200}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍓 Strawberry</span><span class="menu-price">₨140</span><span class="menu-price">₨200</span><button class="add-cart-btn" onclick="openSizeModal('Strawberry Slush','🍓',[{n:'Small',p:140},{n:'Large',p:200}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+      </div>
+    </div>
+
+    <!-- 2. ICE CREAM SHAKE -->
+    <div class="menu-cat sr" id="cat-iceshake">
+      <div class="menu-section-label">Ice Cream Shake</div>
+      <div class="menu-section-sub">Rich, thick ice cream shakes in two sizes.</div>
+      <div class="menu-card">
+        <div class="menu-card-head cols-2"><span class="menu-col">Item</span><span class="menu-col">Small</span><span class="menu-col">Large</span><span class="menu-col act-col">Add</span></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍫 Chocolate</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Chocolate Ice Cream Shake','🍫',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍦 Vanilla</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Vanilla Ice Cream Shake','🍦',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍬 Tutti Fruity</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Tutti Fruity Ice Cream Shake','🍬',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍓 Strawberry</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Strawberry Ice Cream Shake','🍓',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🌿 Pista</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Pista Ice Cream Shake','🌿',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🥭 Mango</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Mango Ice Cream Shake','🥭',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🌸 Kulfa</span><span class="menu-price">₨330</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Kulfa Ice Cream Shake','🌸',[{n:'Small',p:330},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+      </div>
+    </div>
+
+    <!-- 3. MILK SHAKE -->
+    <div class="menu-cat sr" id="cat-milkshake">
+      <div class="menu-section-label">Milk Shake</div>
+      <div class="menu-section-sub">Classic and premium milk shakes, blended fresh.</div>
+      <div class="menu-card">
+        <div class="menu-card-head cols-2"><span class="menu-col">Item</span><span class="menu-col">Small</span><span class="menu-col">Large</span><span class="menu-col act-col">Add</span></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🥭 Mango</span><span class="menu-price">₨170</span><span class="menu-price">₨220</span><button class="add-cart-btn" onclick="openSizeModal('Mango Milk Shake','🥭',[{n:'Small',p:170},{n:'Large',p:220}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍌 Banana</span><span class="menu-price">₨170</span><span class="menu-price">₨220</span><button class="add-cart-btn" onclick="openSizeModal('Banana Milk Shake','🍌',[{n:'Small',p:170},{n:'Large',p:220}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍓 Strawberry</span><span class="menu-price">₨250</span><span class="menu-price">₨300</span><button class="add-cart-btn" onclick="openSizeModal('Strawberry Milk Shake','🍓',[{n:'Small',p:250},{n:'Large',p:300}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍑 Peach</span><span class="menu-price">₨250</span><span class="menu-price">₨300</span><button class="add-cart-btn" onclick="openSizeModal('Peach Milk Shake','🍑',[{n:'Small',p:250},{n:'Large',p:300}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍮 Khoya Khajoor</span><span class="menu-price">₨350</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="openSizeModal('Khoya Khajoor Milk Shake','🍮',[{n:'Small',p:350},{n:'Large',p:400}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-2"><span class="menu-item-name">🍎 Khajoor Apple</span><span class="menu-price">₨300</span><span class="menu-price">₨350</span><button class="add-cart-btn" onclick="openSizeModal('Khajoor Apple Milk Shake','🍎',[{n:'Small',p:300},{n:'Large',p:350}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+      </div>
+    </div>
+
+    <!-- 4. SPECIALTY -->
+    <div class="menu-cat sr" id="cat-specialty">
+      <div class="menu-section-label">Speciality In Shake</div>
+      <div class="menu-section-sub">Our signature premium selections — Small size only.</div>
+      <div class="menu-card">
+        <div class="menu-card-head cols-1"><span class="menu-col">Item</span><span class="menu-col">Price</span><span class="menu-col act-col">Add</span></div>
+        <div class="menu-row cols-1"><span class="menu-item-name">☕ Cold Coffee</span><span class="menu-price">₨400</span><button class="add-cart-btn" onclick="addToCartDirect('Cold Coffee','☕',400,'Small')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-1"><span class="menu-item-name">🍪 Oreo Shake</span><span class="menu-price">₨350</span><button class="add-cart-btn" onclick="addToCartDirect('Oreo Shake','🍪',350,'Small')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+      </div>
+    </div>
+
+    <!-- 5. FRESH SODA -->
+    <div class="menu-cat sr" id="cat-soda">
+      <div class="menu-section-label">Fresh Soda</div>
+      <div class="menu-section-sub">All sodas available in 3 sizes — tap any flavor to add to cart.</div>
+      <div class="note-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>All flavors: <strong>Small ₨70</strong> &nbsp;|&nbsp; <strong>Medium ₨100</strong> &nbsp;|&nbsp; <strong>Large ₨120</strong></span>
+      </div>
+      <div class="soda-flavor-grid">
+        <div class="soda-flavor-card" onclick="openSizeModal('Tasty Soda','🫧',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Tasty</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Mix Fruit Soda','🍹',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Mix Fruit</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Tasty Apple Soda','🍎',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Tasty Apple</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Peach Soda','🍑',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Peach</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Aloo Bukhara Soda','🍒',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Aloo Bukhara</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Sting Soda','⚡',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Sting</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Blueberry Soda','🫐',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Blueberry</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('English Soda','🫧',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">English Soda</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Lemon Soda','🍋',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Lemon</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Apple Soda','🍎',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Apple</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Lychee Soda','🍈',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Lychee</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Pine Apple Soda','🍍',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Pine Apple</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Orange Soda','🍊',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Orange</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Bubble T Soda','🧋',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Bubble T</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Bubble Gum Soda','🩷',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Bubble Gum</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Cocktail Soda','🍹',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Cocktail</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+        <div class="soda-flavor-card" onclick="openSizeModal('Strawberry Soda','🍓',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><span class="soda-flavor-name">Strawberry</span><div class="soda-flavor-add"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
+      </div>
+    </div>
+
+    <!-- 6. JUICE & DOODH SODA -->
+    <div class="menu-cat sr" id="cat-juice">
+      <div class="menu-section-label">Fresh Juice & Doodh Soda</div>
+      <div class="menu-section-sub">Refreshing juices and creamy doodh sodas.</div>
+      <div class="note-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>All items: <strong>Small ₨70</strong> &nbsp;|&nbsp; <strong>Medium ₨100</strong> &nbsp;|&nbsp; <strong>Large ₨120</strong></span>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-head cols-3"><span class="menu-col">Item</span><span class="menu-col">S</span><span class="menu-col">M</span><span class="menu-col">L</span><span class="menu-col act-col">Add</span></div>
+        <div class="menu-row cols-3"><span class="menu-item-name">🥭 Mango Juice</span><span class="menu-price">₨70</span><span class="menu-price">₨100</span><span class="menu-price">₨120</span><button class="add-cart-btn" onclick="openSizeModal('Mango Juice','🥭',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-3"><span class="menu-item-name">🍦 Ice Cream Soda</span><span class="menu-price">₨70</span><span class="menu-price">₨100</span><span class="menu-price">₨120</span><button class="add-cart-btn" onclick="openSizeModal('Ice Cream Soda','🍦',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+        <div class="menu-row cols-3"><span class="menu-item-name">🍫 Chocolate Soda</span><span class="menu-price">₨70</span><span class="menu-price">₨100</span><span class="menu-price">₨120</span><button class="add-cart-btn" onclick="openSizeModal('Chocolate Soda','🍫',[{n:'Small',p:70},{n:'Medium',p:100},{n:'Large',p:120}])"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button></div>
+      </div>
+    </div>
+
+    <!-- 7. HICO ICE CREAM -->
+    <div class="menu-cat sr" id="cat-hico">
+      <div class="menu-section-label">Hico Scoop Ice Cream</div>
+      <div class="menu-section-sub">Premium Hico scoops — the more you order, the better the deal.</div>
+      <div class="flavor-tags">
+        <span class="flavor-tag">Chocolate</span><span class="flavor-tag">Vanilla</span><span class="flavor-tag">Kulfa</span>
+        <span class="flavor-tag">Strawberry</span><span class="flavor-tag">Tutti Fruity</span><span class="flavor-tag">Pista</span><span class="flavor-tag">Mango</span>
+      </div>
+      <div class="scoop-grid sr">
+        <div class="scoop-card"><div class="scoop-qty">1 Scoop</div><div class="scoop-price">₨70</div><button class="scoop-add-btn" onclick="openFlavorModal('1 Scoop Ice Cream','🍨',70)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+        <div class="scoop-card"><div class="scoop-qty">2 Scoop</div><div class="scoop-price">₨130</div><button class="scoop-add-btn" onclick="openFlavorModal('2 Scoop Ice Cream','🍨',130)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+        <div class="scoop-card"><div class="scoop-qty">3 Scoop</div><div class="scoop-price">₨200</div><button class="scoop-add-btn" onclick="openFlavorModal('3 Scoop Ice Cream','🍨',200)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+        <div class="scoop-card"><div class="scoop-qty">Half Litre</div><div class="scoop-price">₨420</div><button class="scoop-add-btn" onclick="openFlavorModal('Half Litre Ice Cream','🍨',420)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+        <div class="scoop-card" style="grid-column:span 2"><div class="scoop-qty">1 Litre</div><div class="scoop-price">₨800</div><button class="scoop-add-btn" onclick="openFlavorModal('1 Litre Ice Cream','🍨',800)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="12" height="12"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Add</button></div>
+      </div>
+    </div>
+
+    <!-- 8. SCOOP CONE -->
+    <div class="menu-cat sr" id="cat-cone">
+      <div class="menu-section-label">Scoop Cone Ice Cream</div>
+      <div class="menu-section-sub">One fixed price — pick any flavor you love.</div>
+      <div class="note-pill">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>Fixed price: <strong>₨100 per cone</strong></span>
+      </div>
+      <div class="flavor-tags">
+        <span class="flavor-tag">Chocolate</span><span class="flavor-tag">Vanilla</span><span class="flavor-tag">Kulfa</span>
+        <span class="flavor-tag">Tutti Fruity</span><span class="flavor-tag">Pista</span><span class="flavor-tag">Mango</span>
+      </div>
+      <div class="menu-card">
+        <div class="menu-card-head cols-1"><span class="menu-col">Item</span><span class="menu-col">Price</span><span class="menu-col act-col">Add</span></div>
+        <div class="menu-row cols-1">
+          <span class="menu-item-name">🍦 Scoop Cone (Any Flavor)</span>
+          <span class="menu-price">₨100</span>
+          <button class="add-cart-btn" onclick="openFlavorModal('Scoop Cone','🍦',100)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg><span class="btn-label"> Add</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<div class="section-dark">
+  <div class="W">
+    <div class="feature-bar">
+      <div class="feature-item">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="feature-title">100% Fresh</div>
+        <div class="feature-sub">Real fruits. Real ingredients. Every time.</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+        <div class="feature-title">Bulk Orders</div>
+        <div class="feature-sub">Wholesale pricing for events & restaurants.</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" fill="none"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+        <div class="feature-title">Fast Delivery</div>
+        <div class="feature-sub">Same-day delivery within the city.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="W">
+    <div class="about-grid-row">
+      <div class="sr">
+        <span class="apple-eye-sm">Our Story</span>
+        <h2 class="a-h1" style="margin-bottom:20px">We Don't Do<br/><span style="color:var(--red)">Average.</span></h2>
+        <div class="about-quote">
+          <p>"SipSoda was born from a single belief — every drink should be an experience. Fresh fruits, real milk, premium ice cream. Obsessed over until it's truly unforgettable."</p>
+        </div>
+        <p class="a-copy" style="margin:20px 0 28px">Founded in Pakistan. Serving customers who refuse to settle for ordinary. Fresh ingredients every single day.</p>
+        <div style="display:flex;align-items:center;flex-wrap:wrap;gap:16px">
+          <button class="btn btn-fill btn-md" onclick="openCart()">🛒 View Cart</button>
+          <a href="https://wa.me/923000000000" style="display:inline-flex;align-items:center;gap:4px;font-size:15px;font-weight:400;color:var(--red);transition:color var(--t1)">WhatsApp Us <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></a>
+        </div>
+      </div>
+      <div class="stat-stack sr d2">
+        <div class="a-stat-box"><div class="a-stat-n">8</div><div class="a-stat-l">Categories on the menu — slushes, shakes, sodas, ice cream and more.</div></div>
+        <div class="a-stat-box"><div class="a-stat-n">50+</div><div class="a-stat-l">Menu items crafted with fresh, real ingredients. Nothing artificial.</div></div>
+        <div class="a-stat-box"><div class="a-stat-n">0%</div><div class="a-stat-l">Compromise on quality. Every item made to order, every single time.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="W">
+    <div class="faq-layout">
+      <div class="sr">
+        <span class="apple-eye-sm">Got Questions?</span>
+        <h2 class="a-h1" style="margin-bottom:16px">We've Got<br/><span style="color:var(--red)">Answers.</span></h2>
+        <p class="a-copy" style="margin-bottom:28px">Koi bhi sawal ho — order, delivery, ya bulk pricing — hum yahan hain.</p>
+        <a href="https://wa.me/923000000000" class="btn btn-outline btn-sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Ask on WhatsApp
+        </a>
+      </div>
+      <div class="faq-list sr d2">
+        <div class="faq-item"><button class="faq-q" onclick="fQ(this)"><span>Order kaise dein?</span><div class="faq-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button><div class="faq-body"><div class="faq-ans">Menu se items select kar ke cart mein add karein, phir "Order via WhatsApp" press karein. Aapka poora order detail automatic WhatsApp pe bhej diya jayega!</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="fQ(this)"><span>Kya ingredients fresh hain?</span><div class="faq-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button><div class="faq-body"><div class="faq-ans">Bilkul. Sirf real fruits, fresh milk, aur premium Hico ice cream use hota hai. Koi artificial flavors ya colors nahi.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="fQ(this)"><span>Bulk order kitni se shuru hoti hai?</span><div class="faq-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button><div class="faq-body"><div class="faq-ans">Events, restaurants, aur corporate clients ke liye special bulk pricing available hai. WhatsApp par contact karein details ke liye.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="fQ(this)"><span>Delivery available hai?</span><div class="faq-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button><div class="faq-body"><div class="faq-ans">Haan! City ke andar same-day delivery available hai. Order WhatsApp par confirm karein aur estimated time pata karein.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="fQ(this)"><span>Soda sizes kya hain?</span><div class="faq-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button><div class="faq-body"><div class="faq-ans">Fresh Soda aur Juice 3 sizes mein milte hain — Small (₨70), Medium (₨100), Large (₨120). Sab flavors ki ek hi price hai.</div></div></div>
+        <div class="faq-item"><button class="faq-q" onclick="fQ(this)"><span>Ice cream flavors konse hain?</span><div class="faq-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></button><div class="faq-body"><div class="faq-ans"><strong style="color:var(--w)">Hico flavors:</strong> Chocolate, Vanilla, Kulfa, Strawberry, Tutti Fruity, Pista, Mango. Scoop cone mein Strawberry ke ilawa sab available hain.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-sec">
+  <div class="cta-mesh"></div>
+  <div class="cta-inner sr">
+    <h2 class="cta-title">Ready to<br/>Order?</h2>
+    <p class="cta-sub">Add items to your cart and send your order directly on WhatsApp.</p>
+    <div class="cta-btns">
+      <button class="btn-wh" onclick="openCart()">🛒 View Cart <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      <a href="https://wa.me/923000000000" class="btn-blk"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>WhatsApp Us</a>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="W">
+    <div class="sr" style="margin-bottom:48px">
+      <span class="apple-eye-sm">Get In Touch</span>
+      <h2 class="a-h1">Let's Talk <span style="color:var(--red)">Orders.</span></h2>
+    </div>
+    <div class="cnt-layout">
+      <div class="sr">
+        <form class="F-stack" onsubmit="fSub(event)">
+          <div class="F-row">
+            <div class="F-grp"><label class="F-lbl">Name</label><input type="text" class="F-field" placeholder="Ahmad Raza" required/></div>
+            <div class="F-grp"><label class="F-lbl">Phone</label><input type="tel" class="F-field" placeholder="+92 300 0000000" required/></div>
+          </div>
+          <div class="F-grp"><label class="F-lbl">Email</label><input type="email" class="F-field" placeholder="you@example.com"/></div>
+          <div class="F-grp">
+            <label class="F-lbl">What are you ordering?</label>
+            <select class="F-field" style="appearance:none;cursor:pointer">
+              <option value="">Choose a category…</option>
+              <option>Fresh Fruits Slush</option><option>Ice Cream Shake</option><option>Milk Shake</option>
+              <option>Cold Coffee / Oreo Shake</option><option>Fresh Soda</option>
+              <option>Fresh Juice / Doodh Soda</option><option>Hico Scoop Ice Cream</option>
+              <option>Scoop Cone</option><option>Bulk / Wholesale Order</option>
+            </select>
+          </div>
+          <div class="F-grp"><label class="F-lbl">Message / Order Details</label><textarea class="F-field" rows="4" placeholder="Tell us about your order, quantity, size preferences…" style="resize:none"></textarea></div>
+          <button type="submit" class="btn btn-fill btn-lg" style="justify-content:center;border-radius:var(--r12)">
+            Send Inquiry
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </form>
+        <div id="F-ok">✓ Message sent! We'll reach out within 24 hours.</div>
+      </div>
+      <div class="C-cards sr d2">
+        <div class="C-card"><div class="C-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><div class="C-title">Location</div><div class="C-val">Pakistan<br/>Delivery available city-wide</div></div></div>
+        <div class="C-card"><div class="C-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2.26h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.07 6.07l.9-.89a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div class="C-title">Phone &amp; WhatsApp</div><div class="C-val"><a href="tel:+923000000000">+92 300 0000000</a><br/><a href="https://wa.me/923000000000">WhatsApp Chat →</a></div></div></div>
+        <div class="C-card"><div class="C-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><div class="C-title">Business Hours</div><div class="C-val">Monday – Saturday<br/>9:00 AM – 8:00 PM PKT</div></div></div>
+        <div class="C-card" style="border-color:rgba(255,59,47,.18);background:var(--rdg)"><div class="C-ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div><div class="C-title">Bulk Orders</div><div class="C-val">Events, restaurants & corporate. Contact us for wholesale pricing.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="footer-row">
+    <div class="ft-logo">Sip<span>Soda</span></div>
+    <div class="ft-links">
+      <a href="#menu">Menu</a><a href="#about">About</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+    </div>
+    <p class="ft-copy">© 2025 SipSoda · Crafted in Pakistan</p>
+  </div>
+</footer>
+
+<script>
+const WA_NUMBER = '923000000000';
+let cart = [];
+let smPending = null;
+
+// ---- SIZE MODAL ----
+function openSizeModal(name, emoji, sizes) {
+  smPending = { name, emoji, sizes, selectedIdx: null };
+  document.getElementById('sm-title').textContent = emoji + ' ' + name;
+  document.getElementById('sm-sub').textContent = 'Select size to add to cart';
+  const opts = document.getElementById('sm-opts');
+  opts.innerHTML = '';
+  sizes.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'size-opt';
+    d.innerHTML = `<div class="size-opt-name">${s.n}</div><div class="size-opt-price">₨${s.p}</div>`;
+    d.onclick = () => {
+      document.querySelectorAll('.size-opt').forEach(o => o.classList.remove('sel'));
+      d.classList.add('sel');
+      smPending.selectedIdx = i;
+      document.getElementById('sm-confirm').disabled = false;
+    };
+    opts.appendChild(d);
+  });
+  document.getElementById('sm-confirm').disabled = true;
+  document.getElementById('size-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function openFlavorModal(name, emoji, price) {
+  addToCartDirect(name, emoji, price, 'Any Flavor');
+}
+
+function closeSizeModal() {
+  document.getElementById('size-modal').classList.remove('open');
+  if (!document.getElementById('cart-overlay').classList.contains('open')) {
+    document.body.style.overflow = '';
+  }
+  smPending = null;
+}
+
+function confirmSize() {
+  if (!smPending || smPending.selectedIdx === null) return;
+  const s = smPending.sizes[smPending.selectedIdx];
+  addToCartDirect(smPending.name, smPending.emoji, s.p, s.n);
+  closeSizeModal();
+}
+
+document.getElementById('size-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeSizeModal();
+});
+
+// ---- CART ----
+function addToCartDirect(name, emoji, price, size) {
+  const key = name + '|' + size;
+  const existing = cart.find(i => i.key === key);
+  if (existing) { existing.qty++; }
+  else { cart.push({ key, name, emoji, price, size, qty: 1 }); }
+  updateCartUI();
+  showToast('✓ ' + emoji + ' ' + name + ' added!');
+  const btn = document.querySelector('.nav-cart-btn');
+  btn.style.transform = 'scale(1.2)';
+  setTimeout(() => btn.style.transform = '', 200);
+}
+
+function changeQty(key, delta) {
+  const item = cart.find(i => i.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) { cart = cart.filter(i => i.key !== key); }
+  updateCartUI();
+  renderCartItems();
+}
+
+function clearCart() {
+  cart = [];
+  updateCartUI();
+  renderCartItems();
+}
+
+function getTotal() { return cart.reduce((s, i) => s + i.price * i.qty, 0); }
+function getItemCount() { return cart.reduce((s, i) => s + i.qty, 0); }
+
+function updateCartUI() {
+  const count = getItemCount(), total = getTotal();
+  const badge = document.getElementById('nav-cart-count');
+  badge.textContent = count;
+  badge.classList.toggle('vis', count > 0);
+  document.getElementById('cart-head-count').textContent = count + ' item' + (count !== 1 ? 's' : '');
+  document.getElementById('cart-total').textContent = '₨' + total.toLocaleString();
+  document.getElementById('cart-wa-btn').disabled = count === 0;
+}
+
+function renderCartItems() {
+  const list = document.getElementById('cart-items-list');
+  if (cart.length === 0) {
+    list.innerHTML = `<div class="cart-empty">
+      <div class="cart-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+      <p>Cart is empty</p><small>Add items from the menu!</small>
+    </div>`;
+    return;
+  }
+  list.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-emoji">${item.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-size">${item.size} · ₨${item.price} each</div>
+      </div>
+      <div class="cart-item-ctrl">
+        <button class="qty-btn" onclick="changeQty('${item.key.replace(/'/g,"\\'")}', -1)">−</button>
+        <span class="qty-num">${item.qty}</span>
+        <button class="qty-btn" onclick="changeQty('${item.key.replace(/'/g,"\\'")}', 1)">+</button>
+      </div>
+      <div class="cart-item-price">₨${(item.price * item.qty).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+// ---- WHATSAPP ----
+function sendToWhatsApp() {
+  if (cart.length === 0) return;
+  const total = getTotal();
+  let msg = '🛒 *SipSoda Order*\n━━━━━━━━━━━━━━━━━━\n';
+  cart.forEach((item, idx) => {
+    msg += `${idx + 1}. ${item.emoji} *${item.name}*\n   Size: ${item.size} | Qty: ${item.qty} | ₨${item.price} each\n   Subtotal: ₨${(item.price * item.qty).toLocaleString()}\n`;
+  });
+  msg += `━━━━━━━━━━━━━━━━━━\n💰 *Total: ₨${total.toLocaleString()}*\n\nPlease confirm my order. Thank you! 🙏`;
+  window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// ---- CART PANEL ----
+function openCart() {
+  renderCartItems();
+  updateCartUI();
+  document.getElementById('cart-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeCart() {
+  document.getElementById('cart-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function cartOverlayClick(e) {
+  if (e.target === document.getElementById('cart-overlay')) closeCart();
+}
+
+// ---- TOAST ----
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('cart-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ---- MOBILE NAV ----
+const mobBtn = document.getElementById('mob-menu-btn');
+const mobNavOverlay = document.getElementById('mob-nav-overlay');
+let navOpen = false;
+
+mobBtn.addEventListener('click', () => {
+  navOpen = !navOpen;
+  mobNavOverlay.classList.toggle('open', navOpen);
+  document.body.style.overflow = navOpen ? 'hidden' : '';
+  document.getElementById('mob-icon').innerHTML = navOpen
+    ? '<line x1="2" y1="2" x2="18" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="18" y1="2" x2="2" y2="18" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>'
+    : '<rect y="3" width="20" height="2" rx="1"/><rect y="9" width="20" height="2" rx="1"/><rect y="15" width="20" height="2" rx="1"/>';
+});
+
+function closeMobNav() {
+  navOpen = false;
+  mobNavOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  document.getElementById('mob-icon').innerHTML = '<rect y="3" width="20" height="2" rx="1"/><rect y="9" width="20" height="2" rx="1"/><rect y="15" width="20" height="2" rx="1"/>';
+}
+
+document.querySelectorAll('.mob-nav-link').forEach(a => a.addEventListener('click', closeMobNav));
+
+// ---- CUSTOM CURSOR (desktop) ----
+const D = document.getElementById('C-dot'), R = document.getElementById('C-ring');
+if (D && R && window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    D.style.left = mx + 'px'; D.style.top = my + 'px';
+  });
+  (function L() { rx += (mx - rx) * .12; ry += (my - ry) * .12; R.style.left = rx + 'px'; R.style.top = ry + 'px'; requestAnimationFrame(L); })();
+  document.querySelectorAll('a,button,select,.soda-flavor-card,.scoop-card,.size-opt').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hov'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hov'));
+  });
+}
+
+// ---- SCROLL REVEAL ----
+const obs = new IntersectionObserver(es => { es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } }); }, { threshold: .08 });
+document.querySelectorAll('.sr').forEach(el => obs.observe(el));
+
+// ---- CATEGORY TABS ----
+function showCat(id, btn) {
+  document.querySelectorAll('.menu-cat').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('cat-' + id).classList.add('active');
+  btn.classList.add('active');
+  // Scroll tab into view on mobile
+  btn.scrollIntoView({ inline: 'nearest', behavior: 'smooth' });
+  document.querySelectorAll('#cat-' + id + ' .sr').forEach(el => { el.classList.remove('on'); setTimeout(() => el.classList.add('on'), 30); });
+}
+
+// ---- FAQ ----
+function fQ(btn) {
+  const item = btn.closest('.faq-item'), body = item.querySelector('.faq-body'), open = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(el => { el.classList.remove('open'); el.querySelector('.faq-body').style.maxHeight = '0'; });
+  if (!open) { item.classList.add('open'); body.style.maxHeight = body.scrollHeight + 'px'; }
+}
+
+// ---- CONTACT FORM ----
+function fSub(e) {
+  e.preventDefault();
+  const ok = document.getElementById('F-ok');
+  ok.style.display = 'block';
+  e.target.reset();
+  setTimeout(() => ok.style.display = 'none', 5000);
+}
+
+updateCartUI();
+</script>
+</body>
+</html>
